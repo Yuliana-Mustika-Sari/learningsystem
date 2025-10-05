@@ -32,6 +32,11 @@
                             {{ __('My Course') }}
                         </x-nav-link>
                     @endif
+                    @if (Auth::user()->role_id == 2)
+                        <x-nav-link :href="route('instructor.assignments.index')" :active="request()->routeIs('instructor.assignments.*')">
+                            {{ __('Assignment') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

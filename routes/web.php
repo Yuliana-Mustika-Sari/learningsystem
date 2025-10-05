@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Instructor\AssignmentController;
 use App\Http\Controllers\Instructor\CourseCountroller;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -44,32 +45,10 @@ Route::middleware(['auth', 'permission:course_instructor'])->prefix('instructor'
         Route::resource('/courses', CourseCountroller::class);
     });
 });
-Route::middleware(['auth', 'permission:create_course'])->group(function () {
-    Route::get('/courses/create', function () {
-        return "Form Create Course";
-    })->name('courses.create');
-});
-
-Route::middleware(['auth', 'permission:grade_assignment'])->group(function () {
-    Route::get('/assignments/{id}/grade', function ($id) {
-        return "Form Grade Assignment $id";
+Route::middleware(['auth', 'permission:assignment_management'])->prefix('instructor')->name('instructor.')->group(function () {
+    Route::middleware('permission:course_instructor')->group(function () {
+        Route::resource('/assignments', AssignmentController::class);
     });
-});
-Route::middleware(['auth', 'permission:view_course'])->group(function () {
-    Route::get('/courses', function () {
-        return "List Courses";
-    })->name('courses.index');
-});
-
-Route::middleware(['auth', 'permission:submit_assignment'])->group(function () {
-    Route::post('/assignments/{id}/submit', function ($id) {
-        return "Submit Assignment $id";
-    });
-});
-Route::middleware(['auth', 'permission:submit_assignment'])->group(function () {
-    Route::get('/assignment', function () {
-        return "Submit Assignment";
-    })->name('assignment.index');
 });
 
 
