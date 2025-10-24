@@ -17,6 +17,19 @@
                     <textarea name="description" class="border rounded w-full"></textarea>
                 </div>
                 <div>
+                    <label class="block">Price</label>
+                    <input type="number" name="price" class="border rounded w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Course Type</label>
+                    <select name="is_premium" class="w-full border rounded p-2">
+                        <option value="0" {{ isset($course) && !$course->is_premium ? 'selected' : '' }}>Free
+                        </option>
+                        <option value="1" {{ isset($course) && $course->is_premium ? 'selected' : '' }}>Paid
+                        </option>
+                    </select>
+                </div>
+                <div>
                     <label class="block">Thumbnail</label>
                     <input type="file" name="thumbnail" class="border rounded w-full">
                 </div>

@@ -34,7 +34,7 @@ class CourseController extends Controller
     {
         $request->validate([
             'title'        => 'required|string|max:255',
-            'description'  => 'nullable|string',
+            'description'  => 'required|string|max:255',
             'instructor_id'=> 'required|exists:users,id',
         ]);
 

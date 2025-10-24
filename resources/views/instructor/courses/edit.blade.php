@@ -25,6 +25,27 @@
                     <label class="block font-medium">Description</label>
                     <textarea name="description" rows="4" class="w-full border rounded px-3 py-2">{{ old('description', $course->description) }}</textarea>
                 </div>
+                <!-- Price -->
+                <div class="mb-4">
+                    <label class="block font-medium">Price</label>
+                    <input type="number" name="price" value="{{ old('price', $course->price) }}"
+                        class="w-full border rounded px-3 py-2" required>
+                    @error('price')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Course Type -->
+                <div class="mb-4">
+                    <label class="block font-medium">Course Type</label>
+                    <select name="is_premium" class="w-full border rounded px-3 py-2">
+                        <option value="0" {{ old('is_premium', $course->is_premium) == 0 ? 'selected' : '' }}>Free</option>
+                        <option value="1" {{ old('is_premium', $course->is_premium) == 1 ? 'selected' : '' }}>Paid</option>
+                    </select>
+                    @error('is_premium')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <!-- Thumbnail -->
                 <div class="mb-4">

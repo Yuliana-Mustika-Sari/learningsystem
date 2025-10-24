@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'role_id',
         'profile_picture',
     ];
+    protected $guard_name = 'web';
 
     /**
      * The attributes that should be hidden for serialization.

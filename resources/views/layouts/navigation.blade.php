@@ -37,6 +37,14 @@
                             {{ __('Assignment') }}
                         </x-nav-link>
                     @endif
+                    {{-- Navbar link khusus untuk student --}}
+                    @if (Auth::check() && Auth::user()->role_id == 3)
+                        <x-nav-link :href="route('student.payments')" :active="request()->routeIs('student.payments*')">
+                            {{ __('Payments') }}
+                        </x-nav-link>
+                    @endif
+
+
                 </div>
             </div>
 

@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Instructor\AssignmentController;
 use App\Http\Controllers\Instructor\CourseCountroller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\PaymentController;
+use App\Http\Controllers\Student\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +52,16 @@ Route::middleware(['auth', 'permission:assignment_management'])->prefix('instruc
         Route::resource('/assignments', AssignmentController::class);
     });
 });
+Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/courses', [StudentController::class, 'index'])->name('courses');
+
+    Route::middleware('permission:payment')->group(function () {
+        Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
+        Route::get('/payment/{courseId}', [PaymentController::class, 'create'])->name('payment.create');
+        Route::post('/payment/{courseId}', [PaymentController::class, 'store'])->name('payment.store');
+    });
+});
+
 
 
 require __DIR__.'/auth.php';

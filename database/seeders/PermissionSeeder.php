@@ -41,6 +41,7 @@ class PermissionSeeder extends Seeder
         ['name' => 'discussion_student', 'display_name' => 'Discussion (Student)', 'group' => 'student'],
         ['name' => 'progress_tracking', 'display_name' => 'Progress Tracking', 'group' => 'student'],
         ['name' => 'certificate_student', 'display_name' => 'Download Certificate', 'group' => 'student'],
+        ['name' => 'payment', 'display_name' => 'Payment', 'group' => 'student'],
     ];
         foreach ($permissions as $permission) {
             Permission::create($permission);

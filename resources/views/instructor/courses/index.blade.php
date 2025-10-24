@@ -14,8 +14,7 @@
                         class="w-full h-40 object-cover rounded mb-2">
                     <h3 class="font-bold">{{ $course->title }}</h3>
                     <p class="text-gray-600">{{ Str::limit($course->description, 100) }}</p>
-                    <p class="mt-2 text-sm text-gray-500">Status: {{ ucfirst($course->status) }}</p>
-
+                    <p class="text-green-500">Rp {{ number_format($course->price, 0, ',', '.') }}</p>
                     <div class="flex space-x-2 mt-3">
                         <a href="{{ route('instructor.courses.edit', $course) }}"
                             class="px-3 py-1 bg-yellow-500 text-white rounded">Edit</a>

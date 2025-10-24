@@ -17,6 +17,8 @@ class Course extends Model
         'item_id',
         'order_number',
         'thumbnail',
+        'price',
+        'is_premium',
     ];
 
     // 🔗 Relationships
