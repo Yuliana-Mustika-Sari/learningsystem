@@ -38,7 +38,9 @@ class CourseCountroller extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|max:2048',
-            'status' => 'required|in:draft,published'
+            'status' => 'required|in:draft,published',
+            'price' => 'required|numeric|min:0',
+            'is_premium' => 'required|boolean',
         ]);
 
         if ($request->hasFile('thumbnail')) {
@@ -77,6 +79,8 @@ class CourseCountroller extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|max:2048',
+            'price' => 'required|numeric|min:0',
+            'is_premium' => 'required|boolean',
         ]);
 
         if ($request->hasFile('thumbnail')) {

@@ -43,6 +43,7 @@ class RolePermissionSeeder extends Seeder
             'discussion_student',
             'progress_tracking',
             'certificate',
+            'payment',
         ])->get());
     }
 }

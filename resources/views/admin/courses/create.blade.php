@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <label class="block text-gray-700 font-medium">Description</label>
-                    <input type="text" name="title"
+                    <input type="text" name="description"
                         class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                         required>
                 </div>
