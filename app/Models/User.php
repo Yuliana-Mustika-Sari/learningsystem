@@ -44,13 +44,15 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     public function role()
     {
@@ -80,17 +82,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return true;
     }
 
-    public function getRoleName(): string{
-        return $this->role_id?->name ?? 'No Role';
+    public function getRoleName(): string
+    {
+        return $this->role?->name ?? 'No Role';
     }
 
-    public function isAdmin():bool{
-        return $this->getRoleName() === 1;
+    public function isAdmin(): bool
+    {
+        return $this->getRoleName() === 'admin';
     }
-    public function isInstructor():bool{
-        return $this->getRoleName() === 2;
+
+    public function isInstructor(): bool
+    {
+        return $this->getRoleName() === 'instructor';
     }
-    public function isStudent():bool{
-        return $this->getRoleName() === 3;
+
+    public function isStudent(): bool
+    {
+        return $this->getRoleName() === 'student';
     }
 }

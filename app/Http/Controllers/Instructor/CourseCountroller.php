@@ -38,12 +38,30 @@ class CourseCountroller extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|max:2048',
+            'item_type' => 'nullable|string|max:100',
+            'item_id' => 'nullable|integer',
+            'order_number' => 'nullable|integer',
             'price' => 'required|numeric|min:0',
             'is_premium' => 'required|boolean',
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+            $path = $request->file('thumbnail')->store('thumbnails', 'public');
+            $data['thumbnail'] = $path;
+
+            // Ensure uploaded file is accessible via asset('storage/...').
+            // If the storage symlink (public/storage) doesn't exist, copy the file
+            // to public/storage so views using asset('storage/'.$path) work.
+            $publicStorage = public_path('storage');
+            $source = storage_path('app/public/' . $path);
+            $dest = $publicStorage . '/' . $path;
+            if (!file_exists($publicStorage)) {
+                // create public/storage and subdirectories
+                @mkdir(dirname($dest), 0755, true);
+            }
+            if (file_exists($source) && !file_exists($dest)) {
+                @copy($source, $dest);
+            }
         }
 
         $data['instructor_id'] = Auth::id();
@@ -83,7 +101,18 @@ class CourseCountroller extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+            $path = $request->file('thumbnail')->store('thumbnails', 'public');
+            $data['thumbnail'] = $path;
+
+            $publicStorage = public_path('storage');
+            $source = storage_path('app/public/' . $path);
+            $dest = $publicStorage . '/' . $path;
+            if (!file_exists($publicStorage)) {
+                @mkdir(dirname($dest), 0755, true);
+            }
+            if (file_exists($source) && !file_exists($dest)) {
+                @copy($source, $dest);
+            }
         }
 
         $course->update($data);

@@ -17,6 +17,10 @@
                     <textarea name="description" class="border rounded w-full"></textarea>
                 </div>
                 <div>
+                    <label class="block">Item Type</label>
+                    <textarea name="item_type" class="border rounded w-full"></textarea>
+                </div>
+                <div>
                     <label class="block">Price</label>
                     <input type="number" name="price" class="border rounded w-full" required>
                 </div>
