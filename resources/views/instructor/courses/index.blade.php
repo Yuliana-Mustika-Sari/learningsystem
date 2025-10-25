@@ -10,8 +10,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
             @foreach ($courses as $course)
                 <div class="bg-white shadow rounded p-4">
-                    <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : 'https://via.placeholder.com/150' }}"
-                        class="w-full h-40 object-cover rounded mb-2">
+                    <img src="{{ asset('storage/' . $course->thumbnail) }}" class="rounded-lg mb-3" />
                     <h3 class="font-bold">{{ $course->title }}</h3>
                     <p class="text-gray-600">{{ Str::limit($course->description, 100) }}</p>
                     <p class="text-green-500">Rp {{ number_format($course->price, 0, ',', '.') }}</p>

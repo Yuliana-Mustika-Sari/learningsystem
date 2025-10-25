@@ -8,7 +8,7 @@
             <div class="bg-white shadow rounded p-5">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold">{{ $course->title }}</h3>
-                    <a href="{{ route('instructor.assignments.create', $course) }}"
+                    <a href="{{ route('instructor.assignments.create', ['course' => $course->id]) }}"
                         class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">+ Add Assignment</a>
                 </div>
 
@@ -32,7 +32,7 @@
                                         {{ \Carbon\Carbon::parse($assignment->due_date)->format('d M Y, H:i') }}</td>
                                     <td class="p-2 text-center">{{ $assignment->max_score }}</td>
                                     <td class="p-2 text-center space-x-2">
-                                        <a href="{{ route('instructor.assignments.edit', $assignment) }}"
+                                        <a href="{{ route('instructor.assignments.edit', $assignment->id) }}"
                                             class="text-blue-500 hover:underline">Edit</a>
                                         <form action="{{ route('instructor.assignments.destroy', $assignment) }}"
                                             method="POST" class="inline">

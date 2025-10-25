@@ -16,6 +16,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('discussions.index')" :active="request()->routeIs('discussions.*')">
+                        {{ __('Discussions') }}
+                    </x-nav-link>
                     {{-- Menu khusus Admin --}}
                     @if (Auth::user()->role_id == 1)
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">

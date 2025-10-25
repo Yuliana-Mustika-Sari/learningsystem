@@ -1,12 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">Add Assignment</h2>
+        <h2 class="font-semibold text-xl">Add Assignment - {{ $course->title }}</h2>
     </x-slot>
 
     <div class="py-6">
-        <form action="{{ route('instructor.assignments.store',$course->id) }}" method="POST" class="bg-white p-6 rounded shadow">
+        <form action="{{ route('instructor.assignments.store') }}" method="POST"
+            class="bg-white p-6 rounded shadow">
             @csrf
-
+            <input type="hidden" name="course_id" value="{{ $course->id }}">
             <div class="mb-4">
                 <label class="block mb-1 font-medium">Title</label>
                 <input type="text" name="title" class="w-full border-gray-300 rounded p-2" required>

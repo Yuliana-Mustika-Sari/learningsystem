@@ -20,6 +20,9 @@
                         <button class="mt-3 bg-green-500 text-white px-3 py-2 rounded">Enroll Free</button>
                     </form>
                 @endif
+                <div class="mt-2">
+                    <a href="{{ route('courses.discussions.index', $course) }}" class="text-sm text-gray-600 hover:text-blue-600">View Discussions</a>
+                </div>
             </div>
         @endforeach
     </div>

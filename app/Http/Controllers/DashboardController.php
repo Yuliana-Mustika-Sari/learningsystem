@@ -18,7 +18,7 @@ class DashboardController extends Controller
                 'stats' => [
                     'Users' => \App\Models\User::count(),
                     'Courses' => \App\Models\Course::count(),
-                    'Certificates' => \App\Models\Certificate::count(),
+                    'Assignment' => \App\Models\Assignment::count(),
                 ],
             ];
         } elseif ($user->role_id == 2) {
@@ -27,7 +27,7 @@ class DashboardController extends Controller
                 'title' => 'Instructor Dashboard',
                 'stats' => [
                     'My_Course' => \App\Models\Course::where('instructor_id', $user->id)->count(),
-                    'Assignments' => \App\Models\Assignment::where('course_id', $user->id)->count(),
+                    'Assignments' => \App\Models\Assignment::count(),
                     'Students' => \App\Models\User::where('role_id', 3)->count(),
                 ],
             ];
