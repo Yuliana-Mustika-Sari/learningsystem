@@ -50,6 +50,8 @@ Route::middleware(['auth', 'permission:course_instructor'])->prefix('instructor'
 Route::middleware(['auth', 'permission:assignment_management'])->prefix('instructor')->name('instructor.')->group(function () {
     Route::middleware('permission:course_instructor')->group(function () {
         Route::resource('/assignments', AssignmentController::class);
+        Route::get('/assignments/create/{course}', [AssignmentController::class, 'create'])->name('assignments.create');
+        Route::post('/assignments/store/{course}', [AssignmentController::class, 'store'])->name('assignments.store');
     });
 });
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {

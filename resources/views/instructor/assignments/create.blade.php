@@ -4,10 +4,8 @@
     </x-slot>
 
     <div class="py-6">
-        <form action="{{ route('instructor.assignments.store') }}" method="POST" class="bg-white p-6 rounded shadow">
+        <form action="{{ route('instructor.assignments.store',$course->id) }}" method="POST" class="bg-white p-6 rounded shadow">
             @csrf
-
-            <input type="hidden" name="course_id" value="{{ $course->id }}">
 
             <div class="mb-4">
                 <label class="block mb-1 font-medium">Title</label>
