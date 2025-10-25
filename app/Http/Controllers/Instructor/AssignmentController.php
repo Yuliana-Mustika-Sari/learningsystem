@@ -27,17 +27,26 @@ class AssignmentController extends Controller
 
     public function store(Request $request, Course $course)
     {
-        dd($request->all());
+        if (!$course->exists) {
+            return redirect()->route('instructor.assignments.index')->with('error', 'Course not found.');
+        }
+        if ($course->instructor_id !== Auth::id()) {
+            return redirect()->route('instructor.assignments.index')->with('error', 'You do not have access to this course.');
+        }
         $request->validate([
-            'course_id' => 'required|exists:courses,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'required|date',
             'max_score' => 'required|integer|min:1|max:100',
         ]);
 
-        Assignment::create($request->only('course_id', 'title', 'description', 'due_date', 'max_score'));
-
+        Assignment::create([
+            'course_id' => $course->id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'max_score' => $request->max_score,
+        ]);
         return redirect()->route('instructor.assignments.index')->with('success', 'Assignment created successfully.');
     }
 

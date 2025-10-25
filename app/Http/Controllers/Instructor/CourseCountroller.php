@@ -38,7 +38,6 @@ class CourseCountroller extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|max:2048',
-            'status' => 'required|in:draft,published',
             'price' => 'required|numeric|min:0',
             'is_premium' => 'required|boolean',
         ]);
