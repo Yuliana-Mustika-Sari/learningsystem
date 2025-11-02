@@ -17,6 +17,7 @@ class CourseSeeder extends Seeder
             'instructor_id' => $instructor->id,
             'item_type' => 'module',
             'item_id' => 1,
+            'price' => 10000,
             'order_number' => 1,
             'thumbnail' => 'laravel.png',
         ]);
