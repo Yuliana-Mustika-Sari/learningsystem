@@ -4,14 +4,17 @@
     </x-slot>
 
     <div class="p-6">
-        @foreach($discussions as $post)
+        @foreach ($discussions as $post)
             <div class="border-b mb-4 pb-2">
-                <p>
-                    <strong>{{ $post->user->name }}</strong>
-                    • <a href="{{ route('courses.discussions.index', $post->course) }}" class="text-blue-600">{{ $post->course->title }}</a>
-                    • {{ $post->created_at->diffForHumans() }}
-                </p>
-                <p>{{ $post->content }}</p>
+                <div class="flex justify-center mt-5 ">
+                    <p>
+                        <strong>{{ $post->user->name }}</strong>
+                        • <a href="{{ route('courses.discussions.index', $post->course) }}"
+                            class="text-blue-600">{{ $post->course->title }}</a>
+                        • {{ $post->created_at->diffForHumans() }}
+                    </p>
+                    <p>{{ $post->content }}</p>
+                </div>
             </div>
         @endforeach
     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\Instructor\AssignmentController;
 use App\Http\Controllers\Instructor\CourseCountroller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\ListCourse;
 use App\Http\Controllers\Student\PaymentController;
 use App\Http\Controllers\Student\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -57,24 +58,42 @@ Route::middleware(['auth', 'permission:assignment_management'])->prefix('instruc
         Route::resource('assignments', AssignmentController::class);
     });
 });
-Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
-    Route::get('/courses', [StudentController::class, 'index'])->name('courses');
 
-    // Payments: allow all students (role check done by outer middleware).
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
-    Route::get('/payment/{courseId}', [PaymentController::class, 'create'])->name('payment.create');
-    Route::post('/payment/{courseId}', [PaymentController::class, 'store'])->name('payment.store');
-});
+Route::middleware(['auth', 'role:student'])
+    ->prefix('student')
+    ->name('student.')
+    ->group(function () {
+
+        // daftar semua course
+        Route::get('/listcourse', [PaymentController::class, 'index'])->name('listcourse');
+
+        // form pembayaran (untuk course tertentu)
+        Route::get('/listcourse/{courseId}/pay', [PaymentController::class, 'create'])->name('listcourse.pay');
+
+        // proses pembayaran (submit form)
+        Route::post('/listcourse/{courseId}/pay', [PaymentController::class, 'store'])->name('listcourse.pay.store');
+        Route::get('/listcourse/{id}', [CourseController::class, 'show'])->name('course.show');
+
+        // webhook (notifikasi dari payment gateway)
+        Route::post('/listcourse/webhook', [PaymentController::class, 'webhook'])->name('listcourse.webhook');
+    });
+
+Route::middleware(['auth', 'permission:payment'])
+    ->prefix('student')
+    ->name('student.')
+    ->group(function () {
+        Route::get('/listcourse', [PaymentController::class, 'index'])->name('listcourse');
+        Route::get('/payment/{courseId}', [PaymentController::class, 'create'])->name('payment.create');
+        Route::post('/payment/{courseId}', [PaymentController::class, 'store'])->name('payment.store');
+        Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
+    });
+
 Route::middleware(['auth'])->group(function () {
     Route::prefix('courses/{course}')->name('courses.')->group(function () {
-
-        // Semua user dengan izin diskusi (instructor & student)
         Route::middleware(['permission:discussion_management|discussion_student'])->group(function () {
             Route::get('/discussions', [DiscussionController::class, 'index'])->name('discussions.index');
             Route::post('/discussions', [DiscussionController::class, 'store'])->name('discussions.store');
         });
-
-        // Hapus hanya boleh untuk instructor
         Route::middleware(['permission:discussion_management'])->group(function () {
             Route::delete('/discussions/{discussion}', [DiscussionController::class, 'destroy'])->name('discussions.destroy');
         });
@@ -83,7 +102,3 @@ Route::middleware(['auth'])->group(function () {
 
 
 require __DIR__ . '/auth.php';
-
-// Public webhook endpoint for payment gateway
-Route::post('/payment/webhook', [\App\Http\Controllers\Student\PaymentController::class, 'webhook'])
-    ->name('student.payment.webhook');
