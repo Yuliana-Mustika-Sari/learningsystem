@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl">My Assignments</h2>
     </x-slot>
 
-    <div class="py-6 space-y-6">
+    <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         @foreach ($courses as $course)
             <div class="bg-white shadow rounded p-5">
                 <div class="flex justify-between items-center mb-4">

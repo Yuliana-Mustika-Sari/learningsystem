@@ -37,11 +37,9 @@
                     <label class="block">Thumbnail</label>
                     <input type="file" name="thumbnail" class="border rounded w-full">
                 </div>
-                <div class="flex justify-end space-x-3">
-                    <a href="{{ route('instructor.courses.index') }}"
-                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
-                        Cancel
-                    </a>
+                <div class="flex justify-between items-center">
+                    <a href="{{ route('instructor.courses.index') }}" class="text-gray-600 hover:underline">←
+                        Back</a>
                     <button type="submit"
                         class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 shadow">
                         Save

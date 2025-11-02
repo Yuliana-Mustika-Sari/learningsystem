@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl">Add Assignment - {{ $course->title }}</h2>
     </x-slot>
 
-    <div class="py-6">
+    <div class="max-w-3xl mx-auto py-8">
         <form action="{{ route('instructor.assignments.store') }}" method="POST"
             class="bg-white p-6 rounded shadow">
             @csrf
@@ -28,9 +28,13 @@
                 <input type="number" name="max_score" value="100" class="w-full border-gray-300 rounded p-2">
             </div>
 
+            <div class="flex justify-between items-center">
+                <a href="{{ route('instructor.assignments.index') }}" class="text-gray-600 hover:underline">← Back</a>
+
             <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Save Assignment
             </button>
+            </div>
         </form>
     </div>
 </x-app-layout>

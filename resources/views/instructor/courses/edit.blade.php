@@ -4,7 +4,6 @@
     </x-slot>
 
     <div class="max-w-3xl mx-auto py-8">
-
         <div class="p-6 py-10 max-w-3xl mx-auto bg-white shadow rounded">
             <form action="{{ route('instructor.courses.update', $course) }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -61,11 +60,9 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="flex justify-end space-x-3">
-                    <a href="{{ route('instructor.courses.index') }}"
-                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
-                        Cancel
-                    </a>
+                <div class="flex justify-between items-center">
+                    <a href="{{ route('instructor.courses.index') }}" class="text-gray-600 hover:underline">←
+                        Back</a>
                     <button type="submit"
                         class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 shadow">
                         Save

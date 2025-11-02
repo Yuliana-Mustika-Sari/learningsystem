@@ -63,30 +63,16 @@ Route::middleware(['auth', 'role:student'])
     ->prefix('student')
     ->name('student.')
     ->group(function () {
-
-        // daftar semua course
-        Route::get('/listcourse', [PaymentController::class, 'index'])->name('listcourse');
-
-        // form pembayaran (untuk course tertentu)
-        Route::get('/listcourse/{courseId}/pay', [PaymentController::class, 'create'])->name('listcourse.pay');
-
-        // proses pembayaran (submit form)
-        Route::post('/listcourse/{courseId}/pay', [PaymentController::class, 'store'])->name('listcourse.pay.store');
+        Route::get('/listcourse', [ListCourse::class, 'index'])->name('listcourse');
+        Route::get('/listcourse/{courseId}/pay', [ListCourse::class, 'create'])->name('listcourse.pay');
+        Route::post('/listcourse/{courseId}/pay', [ListCourse::class, 'store'])->name('listcourse.pay.store');
         Route::get('/listcourse/{id}', [CourseController::class, 'show'])->name('course.show');
-
-        // webhook (notifikasi dari payment gateway)
-        Route::post('/listcourse/webhook', [PaymentController::class, 'webhook'])->name('listcourse.webhook');
+        Route::post('/listcourse/webhook', [ListCourse::class, 'webhook'])->name('listcourse.webhook');
     });
 
-Route::middleware(['auth', 'permission:payment'])
-    ->prefix('student')
-    ->name('student.')
-    ->group(function () {
-        Route::get('/listcourse', [PaymentController::class, 'index'])->name('listcourse');
-        Route::get('/payment/{courseId}', [PaymentController::class, 'create'])->name('payment.create');
-        Route::post('/payment/{courseId}', [PaymentController::class, 'store'])->name('payment.store');
-        Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
-    });
+// Removed deprecated permission-protected payment routes that referenced non-existent
+// controller methods. Payment entrypoint for students is handled via
+// `student.pay` route (PaymentController@pay) and Midtrans callback is a public endpoint.
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('courses/{course}')->name('courses.')->group(function () {
@@ -99,6 +85,20 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/student/courses', [ListCourse::class, 'index'])->name('student.listcourse');
+    Route::get('/student/courses/{id}', [ListCourse::class, 'show'])->name('student.course.show');
+
+    // Student view of course assignments
+    Route::get('/student/courses/{course}/assignments', [\App\Http\Controllers\Student\AssignmentController::class, 'index'])
+        ->name('student.assignments.index');
+
+    Route::get('/student/pay/{course}', [PaymentController::class, 'pay'])->name('student.pay');
+    Route::post('/student/pay/notify', [PaymentController::class, 'clientNotification'])->name('student.pay.notify');
+});
+
+// Public endpoint for Midtrans notification (webhook)
+Route::post('/midtrans/callback', [PaymentController::class, 'callback'])->name('midtrans.callback');
 
 
 require __DIR__ . '/auth.php';

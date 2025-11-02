@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl">Course Management</h2>
     </x-slot>
 
-    <div class="py-6 px-12">
+    <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <a href="{{ route('admin.courses.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">+ Add Course</a>
 
         <div class="mt-6 overflow-x-auto">

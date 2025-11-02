@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-6 mx-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto py-8">
         <form action="{{ route('instructor.assignments.update', $assignment) }}" method="POST"
             class="bg-white p-6 rounded shadow">
             @csrf

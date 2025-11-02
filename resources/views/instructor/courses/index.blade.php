@@ -3,14 +3,13 @@
         <h2 class="font-semibold text-xl">My Courses</h2>
     </x-slot>
 
-    <div class="p-6 px-16">
+    <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <a href="{{ route('instructor.courses.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">+ Add
             Course</a>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
             @foreach ($courses as $course)
-                <div class="bg-white shadow rounded p-4">
-                    <img src="{{ asset('storage/' . $course->thumbnail) }}" class="rounded-lg mb-3" />
+                <div class="bg-white shadow rounded-lg p-4 overflow-hidden">
+                    <img src="{{ asset('storage/' . $course->thumbnail) }}" class="w-full h-44 object-cover rounded-lg mb-3" alt="{{ $course->title }}" />
                     <h3 class="font-bold">{{ $course->title }}</h3>
                     <p class="text-gray-600">{{ Str::limit($course->description, 100) }}</p>
                     <p class="text-green-500">Rp {{ number_format($course->price, 0, ',', '.') }}</p>
