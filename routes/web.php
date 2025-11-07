@@ -70,10 +70,6 @@ Route::middleware(['auth', 'role:student'])
         Route::post('/listcourse/webhook', [ListCourse::class, 'webhook'])->name('listcourse.webhook');
     });
 
-// Removed deprecated permission-protected payment routes that referenced non-existent
-// controller methods. Payment entrypoint for students is handled via
-// `student.pay` route (PaymentController@pay) and Midtrans callback is a public endpoint.
-
 Route::middleware(['auth'])->group(function () {
     Route::prefix('courses/{course}')->name('courses.')->group(function () {
         Route::middleware(['permission:discussion_management|discussion_student'])->group(function () {
@@ -88,17 +84,16 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/courses', [ListCourse::class, 'index'])->name('student.listcourse');
     Route::get('/student/courses/{id}', [ListCourse::class, 'show'])->name('student.course.show');
-
-    // Student view of course assignments
     Route::get('/student/courses/{course}/assignments', [\App\Http\Controllers\Student\AssignmentController::class, 'index'])
         ->name('student.assignments.index');
 
-    Route::get('/student/pay/{course}', [PaymentController::class, 'pay'])->name('student.pay');
-    Route::post('/student/pay/notify', [PaymentController::class, 'clientNotification'])->name('student.pay.notify');
+    Route::get('/student/payment/{course}/confirm', [PaymentController::class, 'confirm'])->name('student.payment.confirm');
+    Route::post('/student/payment/{course}/process', [PaymentController::class, 'process'])->name('student.payment.process');
+    Route::get('/student/payment/{payment}/waiting', [PaymentController::class, 'waiting'])->name('student.payment.waiting');
+    Route::get('/student/payment/{payment}/status', [PaymentController::class, 'checkStatus'])->name('student.payment.status');
+    Route::get('/payment/success/{payment}', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/student/payment/{payment}/success', [PaymentController::class, 'success'])->name('student.payment.success');
 });
 
-// Public endpoint for Midtrans notification (webhook)
-Route::post('/midtrans/callback', [PaymentController::class, 'callback'])->name('midtrans.callback');
-
-
+Route::post('/webhook/payment', [PaymentController::class, 'callback'])->name('payment.webhook');
 require __DIR__ . '/auth.php';

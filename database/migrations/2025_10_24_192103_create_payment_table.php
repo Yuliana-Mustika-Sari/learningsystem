@@ -11,14 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
-            $table->decimal('amount', 10, 2);
-            $table->enum('payment_method', ['credit_card', 'manual', 'bank_transfer'])->default('manual');
-            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
-            $table->string('transaction_id')->nullable();
+            $table->string('order_number')->unique();
+            $table->integer('quantity')->default(1);
+            $table->decimal('price', 12, 2);
+            $table->decimal('total_amount', 12, 2);
+            $table->enum('payment_status', ['pending', 'paid', 'failed', 'expired'])->default('pending');
+            $table->string('va_number')->nullable();
+            $table->string('payment_url')->nullable();
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
         });
     }

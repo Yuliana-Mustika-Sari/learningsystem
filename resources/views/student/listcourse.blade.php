@@ -47,7 +47,7 @@
                                         Mulai Belajar
                                     </a>
                                 @else
-                                    <a href="{{ route('student.pay', $course->id) }}"
+                                    <a href="{{ route('student.payment.confirm', $course->id) }}"
                                         class="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 text-sm">
                                         Bayar Sekarang
                                     </a>
