@@ -27,7 +27,7 @@ class AssignmentController extends Controller
 
         $hasPaid = Payment::where('student_id', $user->id)
             ->where('course_id', $course->id)
-            ->whereIn('status', ['completed', 'settlement', 'capture', 'success'])
+            ->whereIn('payment_status', ['completed', 'settlement', 'capture', 'success', 'paid'])
             ->exists();
 
         if ($course->price > 0 && ! $isEnrolled && ! $hasPaid) {

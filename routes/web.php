@@ -95,5 +95,6 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/payment/{payment}/success', [PaymentController::class, 'success'])->name('student.payment.success');
 });
 
-Route::post('/webhook/payment', [PaymentController::class, 'callback'])->name('payment.webhook');
+// Accept both GET (gateway redirect) and POST (server webhook)
+Route::match(['get','post'], '/webhook/payment', [PaymentController::class, 'callback'])->name('payment.webhook');
 require __DIR__ . '/auth.php';

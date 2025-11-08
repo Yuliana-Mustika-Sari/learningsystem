@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    // Payment gateway (dummy/doovera)
+    'payment' => [
+        'base_url' => env('PAYMENT_BASE_URL'),
+        'api_key' => env('PAYMENT_API_KEY'),
+        'webhook_secret' => env('PAYMENT_WEBHOOK_SECRET'),
+        'expired_hours' => env('PAYMENT_EXPIRED_HOURS', 24),
+    ],
+
 ];

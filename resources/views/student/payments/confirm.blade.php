@@ -9,22 +9,21 @@
                 <div class="p-6">
                     <h3 class="text-lg font-semibold mb-4">Detail Pesanan</h3>
 
-                    <div class="border rounded-lg p-4 mb-6">
-                        <div class="flex gap-4">
-                            @if ($course->thumbnail)
-                                <img src="{{ asset('storage/' ) }}" alt="{{ $course->title }}" class="w-24 h-24 object-cover rounded">
-                            @else
-                                <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center">
-                                    <svg class="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                            @endif
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-lg">{{ $course->title }}</h4>
-                                {{-- <p class="text-sm text-gray-600">Kode: {{ $course->code }}</p> --}}
-                                {{-- <p class="text-sm text-gray-600">Stok tersedia: {{ $course->stock }}</p> --}}
+                    <div class="border rounded-lg p-4 mb-6 flex gap-4 items-center">
+                        @if ($course->thumbnail)
+                            <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}" class="w-32 h-20 object-cover rounded">
+                        @else
+                            <div class="w-32 h-20 bg-gray-200 rounded flex items-center justify-center">
+                                <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                </svg>
                             </div>
+                        @endif
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-lg">{{ $course->title }}</h4>
+                            @if(!empty($course->short_description))
+                                <p class="text-sm text-gray-600 mt-1">{{ Str::limit($course->short_description, 150) }}</p>
+                            @endif
                         </div>
                     </div>
 
